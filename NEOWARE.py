@@ -1,4 +1,4 @@
-```python
+python
 import os
 try:
     import json, base64, sqlite3, win32crypt, shutil, requests, getpass, socket, platform, psutil
